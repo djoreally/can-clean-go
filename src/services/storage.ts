@@ -43,7 +43,7 @@ export class FileStorage {
     return items.filter(predicate);
   }
 
-  update<T extends { id: string }>(collection: string, id: string, updates: Partial<T>): T | null {
+  update<T extends { id: string }>(collection: string, id: string, updates: Partial<Omit<T, 'id'>>): T | null {
     const items = this.getCollection<T>(collection);
     const index = items.findIndex(item => item.id === id);
     

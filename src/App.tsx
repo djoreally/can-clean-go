@@ -11,6 +11,10 @@ import LoginForm from "./components/auth/LoginForm";
 import BookingForm from "./components/customer/BookingForm";
 import AdminDashboard from "./components/admin/AdminDashboard";
 import TechnicianDashboard from "./components/technician/TechnicianDashboard";
+import AdminSettings from "./pages/AdminSettings";
+import PublicLanding from "./pages/PublicLanding";
+import CustomerProfile from "./pages/CustomerProfile";
+import TechnicianProfile from "./pages/TechnicianProfile";
 import Navbar from "./components/Navbar";
 
 const queryClient = new QueryClient();
@@ -36,8 +40,9 @@ const AppRoutes = () => {
     <div className="min-h-screen bg-gray-50">
       {user && <Navbar />}
       <Routes>
+        <Route path="/landing" element={<PublicLanding />} />
         <Route path="/login" element={!user ? <LoginForm /> : <Navigate to="/" replace />} />
-        <Route path="/" element={<Index />} />
+        <Route path="/" element={user ? <Index /> : <Navigate to="/landing" replace />} />
         
         {/* Customer Routes */}
         <Route
@@ -56,6 +61,14 @@ const AppRoutes = () => {
                 <h1 className="text-2xl font-bold">My Jobs</h1>
                 <p className="text-gray-600">View your scheduled and completed services</p>
               </div>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/customer/profile"
+          element={
+            <ProtectedRoute allowedRoles={['customer']}>
+              <CustomerProfile />
             </ProtectedRoute>
           }
         />
@@ -91,6 +104,14 @@ const AppRoutes = () => {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/admin/settings"
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <AdminSettings />
+            </ProtectedRoute>
+          }
+        />
         
         {/* Technician Routes */}
         <Route
@@ -98,6 +119,14 @@ const AppRoutes = () => {
           element={
             <ProtectedRoute allowedRoles={['technician']}>
               <TechnicianDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/technician/profile"
+          element={
+            <ProtectedRoute allowedRoles={['technician']}>
+              <TechnicianProfile />
             </ProtectedRoute>
           }
         />

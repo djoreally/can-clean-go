@@ -6,7 +6,6 @@ import LoginForm from '../components/auth/LoginForm';
 import BookingForm from '../components/customer/BookingForm';
 import AdminDashboard from '../components/admin/AdminDashboard';
 import TechnicianDashboard from '../components/technician/TechnicianDashboard';
-import Navbar from '../components/Navbar';
 
 const Index = () => {
   const { user } = useAuth();
@@ -35,7 +34,6 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Navbar />
       <main>
         {user.role === 'admin' && <AdminDashboard />}
         {user.role === 'technician' && <TechnicianDashboard />}
